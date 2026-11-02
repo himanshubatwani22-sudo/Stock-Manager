@@ -1,6 +1,6 @@
 import hashlib, io, json, re, secrets, sqlite3
 import joblib, numpy as np, pandas as pd, streamlit as st
-from train_models import make_features
+from features import make_features
 
 st.set_page_config(page_title="Warehouse Manager", page_icon="📦", layout="wide")
 DB_PATH = "users.db"
