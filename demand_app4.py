@@ -361,12 +361,6 @@ def predict_page():
         d1.metric("Suggested order quantity", f"{m['order_qty']} units")
         d2.metric("Expected revenue (7 days)", f"{m['weekly_revenue']:,.2f}")
 
-        chart = pd.DataFrame(
-            {"Units per day": [s4, s3, s2, s1, demand]},
-            index=["4 weeks ago", "3 weeks ago", "2 weeks ago", "Last week", "Predicted"],
-        )
-        st.line_chart(chart)
-
         with st.expander("How these numbers are calculated"):
             st.markdown(
                 "- **Stock will last** = current stock / predicted daily sales\n"
@@ -375,18 +369,6 @@ def predict_page():
                 "- **Reorder now** = stock runs out within the lead time; **Reorder soon** = stock is at or below the reorder point\n"
                 f"- **Suggested order** = reorder point + {COVER_DAYS} days of sales - current stock"
             )
-
-    with st.expander("About the model"):
-        st.markdown(
-            "- **Task:** predict next week's average daily sales from the last 4 weeks, price and a festival flag.\n"
-            "- **Final model:** Random Forest regressor (compared against Linear Regression and Decision Tree).\n"
-            "- **Data:** 15,000 product-week samples (`demand_data.csv`), 80/20 train/test split.\n"
-            "- **Test MAE:** 2.90 units/day (random forest) vs 3.56 for the simple 'same as last week' guess, "
-            "about 19% lower error.\n"
-            "- **Test R2:** 0.48. RMSE: 6.24.\n"
-            "- **Honest note:** Linear Regression scores almost the same (MAE 2.92, R2 0.477), "
-            "so the forest's advantage is small."
-        )
 
 
 # ---------------------------- routing
